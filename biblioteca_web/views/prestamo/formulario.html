@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block titulo %}Nuevo Préstamo{% endblock %}
+{% block contenido %}
+<div class="contenedor-formulario">
+    <h2>Registrar préstamo</h2>
+    <p class="nota-informativa">Solo se muestran volúmenes disponibles.</p>
+    <form method="post" class="formulario">
+        <label for="libro_id">Libro *</label>
+        <select id="libro_id" name="libro_id" required>
+            <option value="">-- Seleccione --</option>
+            {% for l in libros %}
+            <option value="{{ l.id }}">{{ l.titulo }} ({{ l.autor_nombre }})</option>
+            {% endfor %}
+        </select>
+        {% if not libros %}
+        <p class="aviso aviso-fallo">No hay volúmenes disponibles.</p>
+        {% endif %}
+        <label for="usuario_id">Socio *</label>
+        <select id="usuario_id" name="usuario_id" required>
+            <option value="">-- Seleccione --</option>
+            {% for s in socios %}
+            <option value="{{ s.id }}">{{ s.nombre }} ({{ s.email }})</option>
+            {% endfor %}
+        </select>
+        <label for="fecha_prestamo">Fecha préstamo *</label>
+        <input type="date" id="fecha_prestamo" name="fecha_prestamo" required>
+        <label for="fecha_devolucion_esperada">Fecha devolución esperada *</label>
+        <input type="date" id="fecha_devolucion_esperada" name="fecha_devolucion_esperada" required>
+        <div class="grupo-botones">
+            <button type="submit" class="boton boton-principal">Registrar</button>
+            <a href="{{ url_for('movimientos.indice') }}" class="boton boton-secundario">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

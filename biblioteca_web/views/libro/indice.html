@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titulo %}Catálogo - Biblioteca Digital{% endblock %}
+{% block contenido %}
+<div class="bloque-titulo-accion">
+    <h2>Catálogo de Libros</h2>
+    <a href="{{ url_for('catalogo.crear') }}" class="boton boton-principal">Agregar volumen</a>
+</div>
+<div class="seccion-filtros">
+    <form method="get" class="form-filtro">
+        <input type="text" name="buscar" placeholder="Buscar por título..." value="{{ criterio or '' }}">
+        <input type="text" name="genero" placeholder="Filtrar por género..." value="{{ categoria or '' }}">
+        <button type="submit" class="boton boton-secundario">Buscar</button>
+        <a href="{{ url_for('catalogo.indice') }}" class="boton boton-secundario">Limpiar</a>
+    </form>
+</div>
+<table class="tabla-datos">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Año</th>
+            <th>Género</th>
+            <th>Disponible</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for l in libros %}
+        <tr>
+            <td>{{ l.titulo }}</td>
+            <td>{{ l.autor_nombre or '-' }}</td>
+            <td>{{ l.anio or '-' }}</td>
+            <td>{{ l.genero or '-' }}</td>
+            <td>{{ 'Sí' if l.disponible else 'No' }}</td>
+            <td>
+                <a href="{{ url_for('catalogo.modificar', identificador=l.id) }}" class="boton boton-secundario">Editar</a>
+                <form action="{{ url_for('catalogo.borrar', identificador=l.id) }}" method="post" class="form-inline"
+                      onsubmit="return confirm('¿Eliminar este libro?');">
+                    <button type="submit" class="boton boton-peligro">Borrar</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No hay volúmenes en el catálogo.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block titulo %}Escritores - Biblioteca Digital{% endblock %}
+{% block contenido %}
+<div class="bloque-titulo-accion">
+    <h2>Escritores</h2>
+    <a href="{{ url_for('escritores.crear') }}" class="boton boton-principal">Nuevo escritor</a>
+</div>
+<table class="tabla-datos">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Nacionalidad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for e in escritores %}
+        <tr>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.nacionalidad or '-' }}</td>
+            <td>
+                <a href="{{ url_for('escritores.modificar', identificador=e.id) }}" class="boton boton-secundario">Editar</a>
+                <form action="{{ url_for('escritores.borrar', identificador=e.id) }}" method="post" class="form-inline"
+                      onsubmit="return confirm('¿Eliminar este escritor?');">
+                    <button type="submit" class="boton boton-peligro">Borrar</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="3">No hay escritores registrados.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

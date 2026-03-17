@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block titulo %}{{ 'Modificar' if libro else 'Nuevo' }} Libro{% endblock %}
+{% block contenido %}
+<div class="contenedor-formulario">
+    <h2>{{ 'Modificar libro' if libro else 'Nuevo libro' }}</h2>
+    <form method="post" class="formulario">
+        <label for="titulo">Título *</label>
+        <input type="text" id="titulo" name="titulo" value="{{ libro.titulo if libro else '' }}" required>
+        <label for="isbn">ISBN</label>
+        <input type="text" id="isbn" name="isbn" value="{{ libro.isbn if libro else '' }}">
+        <label for="autor_id">Autor *</label>
+        <select id="autor_id" name="autor_id" required>
+            <option value="">-- Seleccione --</option>
+            {% for a in escritores %}
+            <option value="{{ a.id }}" {{ 'selected' if libro and libro.autor_id == a.id else '' }}>{{ a.nombre }}</option>
+            {% endfor %}
+        </select>
+        <label for="anio">Año</label>
+        <input type="number" id="anio" name="anio" value="{{ libro.anio if libro else '' }}" min="1000" max="2100">
+        <label for="genero">Género</label>
+        <input type="text" id="genero" name="genero" value="{{ libro.genero if libro else '' }}">
+        <div class="grupo-botones">
+            <button type="submit" class="boton boton-principal">Guardar</button>
+            <a href="{{ url_for('catalogo.indice') }}" class="boton boton-secundario">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

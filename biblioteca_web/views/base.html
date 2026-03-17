@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Biblioteca Digital{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <header class="encabezado-principal">
+        <h1><a href="{{ url_for('pagina_raiz') }}">Biblioteca Digital</a></h1>
+        <nav class="navegacion">
+            <a href="{{ url_for('catalogo.indice') }}">Catálogo</a>
+            <a href="{{ url_for('escritores.indice') }}">Escritores</a>
+            <a href="{{ url_for('socios.indice') }}">Socios</a>
+            <a href="{{ url_for('movimientos.indice') }}">Préstamos</a>
+            <a href="{{ url_for('movimientos.registro_completo') }}">Registro</a>
+        </nav>
+    </header>
+    <section class="area-contenido">
+        {% with avisos = get_flashed_messages(with_categories=true) %}
+            {% if avisos %}
+                <ul class="lista-avisos">
+                    {% for tipo, texto in avisos %}
+                        <li class="aviso aviso-{{ tipo }}">{{ texto }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block contenido %}{% endblock %}
+    </section>
+    <footer class="pie-pagina">
+        <p>Biblioteca Digital - Gestión de préstamos</p>
+    </footer>
+</body>
+</html>

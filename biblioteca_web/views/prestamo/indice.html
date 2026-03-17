@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block titulo %}Préstamos - Biblioteca Digital{% endblock %}
+{% block contenido %}
+<div class="bloque-titulo-accion">
+    <h2>Préstamos</h2>
+    <a href="{{ url_for('movimientos.crear') }}" class="boton boton-principal">Registrar préstamo</a>
+</div>
+<div class="resumen-activos">
+    <strong>Préstamos en curso:</strong> {{ total_activos }}
+</div>
+<table class="tabla-datos">
+    <thead>
+        <tr>
+            <th>Libro</th>
+            <th>Socio</th>
+            <th>Fecha préstamo</th>
+            <th>Dev. esperada</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in prestamos %}
+        <tr>
+            <td>{{ p.libro_titulo }}</td>
+            <td>{{ p.usuario_nombre }}</td>
+            <td>{{ p.fecha_prestamo }}</td>
+            <td>{{ p.fecha_devolucion_esperada }}</td>
+            <td>{{ p.estado }}</td>
+            <td>
+                {% if p.estado == 'activo' %}
+                <form action="{{ url_for('movimientos.registrar_devolucion', identificador=p.id) }}" method="post" class="form-inline">
+                    <input type="date" name="fecha_devolucion">
+                    <button type="submit" class="boton boton-principal">Devolver</button>
+                </form>
+                {% else %}
+                -
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No hay préstamos registrados.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

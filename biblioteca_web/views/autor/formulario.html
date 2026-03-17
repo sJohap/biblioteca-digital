@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block titulo %}{{ 'Modificar' if escritor else 'Nuevo' }} Escritor{% endblock %}
+{% block contenido %}
+<div class="contenedor-formulario">
+    <h2>{{ 'Modificar escritor' if escritor else 'Nuevo escritor' }}</h2>
+    <form method="post" class="formulario">
+        <label for="nombre">Nombre *</label>
+        <input type="text" id="nombre" name="nombre" value="{{ escritor.nombre if escritor else '' }}" required>
+        <label for="nacionalidad">Nacionalidad</label>
+        <input type="text" id="nacionalidad" name="nacionalidad" value="{{ escritor.nacionalidad if escritor else '' }}">
+        <label for="biografia">Biografía</label>
+        <textarea id="biografia" name="biografia" rows="4">{{ escritor.biografia if escritor else '' }}</textarea>
+        <div class="grupo-botones">
+            <button type="submit" class="boton boton-principal">Guardar</button>
+            <a href="{{ url_for('escritores.indice') }}" class="boton boton-secundario">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

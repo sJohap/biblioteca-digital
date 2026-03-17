@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Inicio - Biblioteca Digital{% endblock %}
+{% block contenido %}
+<div class="pagina-portada">
+    <h2>Bienvenido</h2>
+    <p>Administra el catálogo, escritores, socios y préstamos.</p>
+    <ul class="enlaces-rapidos">
+        <li><a href="{{ url_for('catalogo.indice') }}">Ir al catálogo</a></li>
+        <li><a href="{{ url_for('escritores.indice') }}">Escritores</a></li>
+        <li><a href="{{ url_for('socios.indice') }}">Socios</a></li>
+        <li><a href="{{ url_for('movimientos.indice') }}">Préstamos</a></li>
+    </ul>
+</div>
+{% endblock %}

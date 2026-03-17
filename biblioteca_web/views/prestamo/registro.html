@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block titulo %}Registro de Préstamos{% endblock %}
+{% block contenido %}
+<div class="bloque-titulo-accion">
+    <h2>Registro completo de préstamos</h2>
+    <a href="{{ url_for('movimientos.indice') }}" class="boton boton-secundario">Ver activos</a>
+</div>
+<table class="tabla-datos">
+    <thead>
+        <tr>
+            <th>Libro</th>
+            <th>Socio</th>
+            <th>Fecha préstamo</th>
+            <th>Dev. esperada</th>
+            <th>Dev. real</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in prestamos %}
+        <tr>
+            <td>{{ p.libro_titulo }}</td>
+            <td>{{ p.usuario_nombre }}</td>
+            <td>{{ p.fecha_prestamo }}</td>
+            <td>{{ p.fecha_devolucion_esperada }}</td>
+            <td>{{ p.fecha_devolucion_real or '-' }}</td>
+            <td>{{ p.estado }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No hay registros.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
