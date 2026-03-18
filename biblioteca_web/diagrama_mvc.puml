@@ -1,0 +1,67 @@
+@startuml diagrama_mvc
+
+skinparam component {
+    BackgroundColor #E8F4F8
+    BorderColor #0f3460
+}
+
+package " capa MODEL " #D4EDDA {
+  [Autor]
+  [Libro]
+  [Usuario]
+  [Prestamo]
+  [AutorRepository]
+  [LibroRepository]
+  [UsuarioRepository]
+  [PrestamoRepository]
+}
+
+package " capa VIEW (Templates) " #E8E4F8 {
+  [base.html]
+  [index.html]
+  [autor/indice.html]
+  [autor/formulario.html]
+  [libro/indice.html]
+  [libro/formulario.html]
+  [usuario/indice.html]
+  [usuario/formulario.html]
+  [prestamo/indice.html]
+  [prestamo/formulario.html]
+  [prestamo/registro.html]
+  [estilo.css]
+}
+
+package " capa CONTROLLER (Blueprints) " #FFF3E0 {
+  [escritores - /escritores/]
+  [catalogo - /catalogo/]
+  [socios - /socios/]
+  [movimientos - /movimientos/]
+}
+
+[escritores - /escritores/] --> [AutorRepository]
+[escritores - /escritores/] --> [autor/indice.html]
+[escritores - /escritores/] --> [autor/formulario.html]
+
+[catalogo - /catalogo/] --> [LibroRepository]
+[catalogo - /catalogo/] --> [AutorRepository]
+[catalogo - /catalogo/] --> [libro/indice.html]
+[catalogo - /catalogo/] --> [libro/formulario.html]
+
+[socios - /socios/] --> [UsuarioRepository]
+[socios - /socios/] --> [usuario/indice.html]
+[socios - /socios/] --> [usuario/formulario.html]
+
+[movimientos - /movimientos/] --> [PrestamoRepository]
+[movimientos - /movimientos/] --> [LibroRepository]
+[movimientos - /movimientos/] --> [UsuarioRepository]
+[movimientos - /movimientos/] --> [prestamo/indice.html]
+[movimientos - /movimientos/] --> [prestamo/formulario.html]
+[movimientos - /movimientos/] --> [prestamo/registro.html]
+
+[base.html] <-- [index.html] : extiende
+[base.html] <-- [autor/indice.html] : extiende
+[base.html] <-- [libro/indice.html] : extiende
+[base.html] <-- [usuario/indice.html] : extiende
+[base.html] <-- [prestamo/indice.html] : extiende
+
+@enduml

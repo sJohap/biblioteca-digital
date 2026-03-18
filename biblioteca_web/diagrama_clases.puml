@@ -1,0 +1,107 @@
+@startuml diagrama_clases
+
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor #E8F4F8
+    BorderColor #0f3460
+}
+
+class Autor {
+  - id : Integer
+  - nombre : String
+  - nacionalidad : String
+  - biografia : String
+  + __init__(id_, nombre, nacionalidad, biografia)
+  + __str__() : String
+  + __repr__() : String
+  + es_valido() : Boolean
+}
+
+class Libro {
+  - id : Integer
+  - titulo : String
+  - isbn : String
+  - autor_id : Integer
+  - anio : Integer
+  - genero : String
+  - disponible : Boolean
+  + __init__(id_, titulo, isbn, autor_id, anio, genero, disponible)
+  + __str__() : String
+  + __repr__() : String
+  + es_valido() : Boolean
+}
+
+class Usuario {
+  - id : Integer
+  - nombre : String
+  - email : String
+  - telefono : String
+  + __init__(id_, nombre, email, telefono)
+  + __str__() : String
+  + __repr__() : String
+  + es_valido() : Boolean
+}
+
+class Prestamo {
+  - id : Integer
+  - libro_id : Integer
+  - usuario_id : Integer
+  - fecha_prestamo : String
+  - fecha_devolucion_esperada : String
+  - fecha_devolucion_real : String
+  - estado : String
+  + __init__(id_, libro_id, usuario_id, fecha_prestamo, fecha_devolucion_esperada, fecha_devolucion_real, estado)
+  + __str__() : String
+  + __repr__() : String
+  + es_valido() : Boolean
+}
+
+class AutorRepository {
+  + listar_todos() : List<Autor>
+  + obtener_por_id(id_autor) : Autor
+  + insertar(autor) : Integer
+  + actualizar(autor) : Boolean
+  + eliminar(id_autor) : Boolean
+}
+
+class LibroRepository {
+  + listar_todos() : List<Libro>
+  + obtener_por_id(id_libro) : Libro
+  + listar_disponibles() : List<Libro>
+  + buscar_por_titulo(texto) : List<Libro>
+  + filtrar_por_genero(genero) : List<Libro>
+  + insertar(libro) : Integer
+  + actualizar(libro) : Boolean
+  + marcar_disponibilidad(id_libro, disponible) : Boolean
+  + eliminar(id_libro) : Boolean
+}
+
+class UsuarioRepository {
+  + listar_todos() : List<Usuario>
+  + obtener_por_id(id_usuario) : Usuario
+  + insertar(usuario) : Integer
+  + actualizar(usuario) : Boolean
+  + eliminar(id_usuario) : Boolean
+}
+
+class PrestamoRepository {
+  + listar_todos() : List<Prestamo>
+  + listar_activos() : List<Prestamo>
+  + historial_por_libro(id_libro) : List<Prestamo>
+  + historial_por_usuario(id_usuario) : List<Prestamo>
+  + obtener_por_id(id_prestamo) : Prestamo
+  + insertar(prestamo) : Integer
+  + registrar_devolucion(id_prestamo, fecha) : Boolean
+  + contar_activos() : Integer
+}
+
+Autor "1" --> "*" Libro : autor_id
+Usuario "1" --> "*" Prestamo : usuario_id
+Libro "1" --> "*" Prestamo : libro_id
+
+AutorRepository ..> Autor : maneja
+LibroRepository ..> Libro : maneja
+UsuarioRepository ..> Usuario : maneja
+PrestamoRepository ..> Prestamo : maneja
+
+@enduml
