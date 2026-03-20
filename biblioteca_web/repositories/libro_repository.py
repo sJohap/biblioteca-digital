@@ -150,5 +150,6 @@ class LibroRepository:
         lib = Libro(id_=row['id'], titulo=row['titulo'], isbn=row['isbn'] or '',
                     autor_id=row['autor_id'], anio=row['anio'], genero=row['genero'] or '',
                     disponible=bool(row['disponible']))
-        lib.autor_nombre = row.get('autor_nombre', '')
+        # sqlite3.Row no tiene método .get(); usamos keys() para evitar errores
+        lib.autor_nombre = row['autor_nombre'] if 'autor_nombre' in row.keys() else ''
         return lib

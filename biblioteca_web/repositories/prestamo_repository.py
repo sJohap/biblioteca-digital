@@ -164,6 +164,7 @@ class PrestamoRepository:
                      fecha_devolucion_esperada=row['fecha_devolucion_esperada'],
                      fecha_devolucion_real=row['fecha_devolucion_real'],
                      estado=row['estado'])
-        p.libro_titulo = row.get('libro_titulo', '')
-        p.usuario_nombre = row.get('usuario_nombre', '')
+        # sqlite3.Row no tiene método .get(); usamos keys() para evitar errores
+        p.libro_titulo = row['libro_titulo'] if 'libro_titulo' in row.keys() else ''
+        p.usuario_nombre = row['usuario_nombre'] if 'usuario_nombre' in row.keys() else ''
         return p
